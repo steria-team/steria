@@ -1,6 +1,7 @@
 class House:
     def __init__(self):
         self.street = None
+        # todo: rename number
         self.address = None
 
     def ask(self):
