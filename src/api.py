@@ -87,7 +87,8 @@ def handle_dialog(req, res):
     else:
         user_data: house.House = sessionStorage[user_id]
         user_data.set_answer(text=req['request']['original_utterance'].lower())
-        res['response']['text'] = user_data.ask()
+        res['response']['text'] = user_data.answer()
+
 
     return
     # # Обрабатываем ответ пользователя.
