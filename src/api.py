@@ -12,11 +12,8 @@ import typing
 import os
 import pathlib
 
-
-import lxml
 from flask import Flask, request
 from flask_cors import CORS
-from lxml import html
 
 from . import house
 
@@ -32,7 +29,6 @@ sessionStorage: typing.Dict[str,  house.House] = {}
 def after_request(response):
     header = response.headers
     header['Access-Control-Allow-Origin'] = 'https://alice-dev.vitalets.xyz'
-    print('header adding')
     return response
 
 
@@ -70,15 +66,17 @@ def handle_dialog(req, res):
         # Это новый пользователь.
         # Инициализируем сессию и поприветствуем его.
         sessionStorage[user_id]: typing.Dict[house.House] = house.House()
-        res['response']['text'] = sessionStorage[user_id].ask()
+        res['response']['text'] = sessionStorage[user_id].help()
         return
     else:
-        if req['request']['original_utterance'].lower() == 'сброс':
-            sessionStorage[user_id] = None
-            return
 
         user_data: house.House = sessionStorage[user_id]
-        user_data.set_answer(text=req['request']['original_utterance'].lower())
+        user_answer: str = req['request']['original_utterance'].lower()
+
+        if user_answer == 'сброс':
+            res['response']['text'] = sessionStorage[user_id].reset()
+
+        user_data.parse_response(text=user_answer)
         res['response']['text'] = user_data.answer()
 
     return
