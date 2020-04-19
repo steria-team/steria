@@ -1,3 +1,16 @@
+import os
+import pathlib
+
+import lxml
+import lxml.html
+
+DIR_SCRIPT: pathlib.Path = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
+
+
+class NotFoundInfoHouse(Exception):
+    pass
+
+
 class House:
     def __init__(self):
         self.street = None
@@ -18,7 +31,13 @@ class House:
         if self.number is None:
             return self._ask_address()
 
-        return self._get_info_house()
+        try:
+            info: str = self._get_info_house()
+        except NotFoundInfoHouse:
+            info: str = 'Error'
+            self._reset()
+
+        return info
 
     def _ask_address(self):
         return 'Назовите номер дома? Например, 7'
@@ -28,14 +47,27 @@ class House:
 
     def set_answer(self, text: str):
         if self.street is None:
+            text = f'{text[0].upper()}{text[1:]}'
             self.street = text
         elif self.number is None:
             self.number = text
 
     def _get_info_house(self):
-        house_info = "1973: Пирожковая - ул. Красной конницы, 10 ([211]. С.187) \n" \
-"1980: Пирожковая - ул. Красной конницы, 10 (Краткий телефонный справочник ЛГТС. 1980 г. С.311) \n" \
-"1986: Пирожковая - ул. Красной конницы, 10 ([212]. С.280) \n" \
-"1988: Пирожковая - ул. Красной конницы, 10 ([125],[213]. С.340) \n" \
-"2004: \"Ретро\" кафе - Кавалергардская ул., 10 (Телефонный справочник «Весь Петербург-2004»)"
-        return house_info
+        text: str = '{header} \n {about}'
+        header_xpath: str = f".//*[@class='address' and contains(., '{self.number}')]" \
+                            f"/a[contains(text(), '{self.street}')]/parent::*/parent::*/parent::*/parent::*/h2"
+
+        example_page_path: str = os.path.join(DIR_SCRIPT.parent, 'page_example', 'example2.html')
+        with open(example_page_path, 'r', encoding='windows-1251') as f:
+            html_text: str = f.read()
+
+        tree: lxml.html.HtmlElement = lxml.html.fromstring(html=html_text)
+
+        if len(tree.xpath(header_xpath)) == 0:
+            raise NotFoundInfoHouse
+
+        return tree.xpath(header_xpath)[0].text
+
+    def _reset(self):
+        self.street = None
+        self.number = None

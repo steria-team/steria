@@ -85,43 +85,15 @@ def handle_dialog(req, res):
         res['response']['text'] = sessionStorage[user_id].ask()
         return
     else:
+        if req['request']['original_utterance'].lower() == 'сброс':
+            sessionStorage[user_id] = None
+            return
+
         user_data: house.House = sessionStorage[user_id]
         user_data.set_answer(text=req['request']['original_utterance'].lower())
         res['response']['text'] = user_data.answer()
 
-
     return
-    # # Обрабатываем ответ пользователя.
-    # support_street: typing.List[str] = ['Кавалергардская ул.']
-    # if req['request']['original_utterance'].lower() in support_street:
-    #     # Пользователь согласился, прощаемся.
-    #     res['response']['text'] = parse_html(req['request']['original_utterance'])
-    #     return
-    #
-    # # Если нет, то убеждаем его купить духи!
-    # res['response']['text'] = 'Все говорят "%s", а ты купи духи!' % (
-    #     req['request']['original_utterance']
-    # )
-    # res['response']['buttons'] = get_suggests()
-
-
-# Функция возвращает две подсказки для ответа.
-def get_suggests() -> typing.List[dict]:
-
-    # suggests = [
-    #     {'title': suggest, 'hide': True}
-    #     for suggest in session['suggests'][:2]
-    # ]
-    #
-
-    suggests: typing.List[dict] = []
-    suggests.append({
-        "title": "Подробнее",
-        "url": "http://www.citywalls.ru/search-street283.html",
-        "hide": True
-    })
-
-    return suggests
 
 
 if __name__ == '__main__':
