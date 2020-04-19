@@ -62,18 +62,6 @@ def main():
     )
 
 
-# Функция для непосредственной обработки диалога.
-def parse_html(adress: str):
-    example_page_path: str = os.path.join(DIR_SCRIPT.parent, 'page_example', 'example.html')
-    with open(example_page_path, 'r', encoding='ISO-8859-1') as f:
-        text = f.read()
-    tree: lxml.html.HtmlElement = html.fromstring(html=text)
-    # todo: доделать
-    # .//*[@class='address' and text()=', 2']/a[contains(text(), 'Очаковская ул.')]/preceding-sibling::*[@class='cssHouseHead']
-    tree.xpath("//div[@class='address' ]/a[contains(text(),'Суво')]")
-    return
-
-
 def handle_dialog(req, res):
     user_id = req['session']['user_id']
 
