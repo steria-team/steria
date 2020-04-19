@@ -12,11 +12,8 @@ import typing
 import os
 import pathlib
 
-
-import lxml
 from flask import Flask, request
 from flask_cors import CORS
-from lxml import html
 
 from . import house
 
@@ -32,7 +29,6 @@ sessionStorage: typing.Dict[str,  house.House] = {}
 def after_request(response):
     header = response.headers
     header['Access-Control-Allow-Origin'] = 'https://alice-dev.vitalets.xyz'
-    print('header adding')
     return response
 
 
@@ -62,18 +58,6 @@ def main():
     )
 
 
-# Функция для непосредственной обработки диалога.
-def parse_html(adress: str):
-    example_page_path: str = os.path.join(DIR_SCRIPT.parent, 'page_example', 'example.html')
-    with open(example_page_path, 'r', encoding='ISO-8859-1') as f:
-        text = f.read()
-    tree: lxml.html.HtmlElement = html.fromstring(html=text)
-    # todo: доделать
-    # .//*[@class='address' and text()=', 2']/a[contains(text(), 'Очаковская ул.')]/preceding-sibling::*[@class='cssHouseHead']
-    tree.xpath("//div[@class='address' ]/a[contains(text(),'Суво')]")
-    return
-
-
 def handle_dialog(req, res):
     user_id = req['session']['user_id']
 
@@ -82,46 +66,20 @@ def handle_dialog(req, res):
         # Это новый пользователь.
         # Инициализируем сессию и поприветствуем его.
         sessionStorage[user_id]: typing.Dict[house.House] = house.House()
-        res['response']['text'] = sessionStorage[user_id].ask()
+        res['response']['text'] = sessionStorage[user_id].help()
         return
     else:
+
         user_data: house.House = sessionStorage[user_id]
-        user_data.set_answer(text=req['request']['original_utterance'].lower())
+        user_answer: str = req['request']['original_utterance'].lower()
+
+        if user_answer == 'сброс':
+            res['response']['text'] = sessionStorage[user_id].reset()
+
+        user_data.parse_response(text=user_answer)
         res['response']['text'] = user_data.answer()
 
-
     return
-    # # Обрабатываем ответ пользователя.
-    # support_street: typing.List[str] = ['Кавалергардская ул.']
-    # if req['request']['original_utterance'].lower() in support_street:
-    #     # Пользователь согласился, прощаемся.
-    #     res['response']['text'] = parse_html(req['request']['original_utterance'])
-    #     return
-    #
-    # # Если нет, то убеждаем его купить духи!
-    # res['response']['text'] = 'Все говорят "%s", а ты купи духи!' % (
-    #     req['request']['original_utterance']
-    # )
-    # res['response']['buttons'] = get_suggests()
-
-
-# Функция возвращает две подсказки для ответа.
-def get_suggests() -> typing.List[dict]:
-
-    # suggests = [
-    #     {'title': suggest, 'hide': True}
-    #     for suggest in session['suggests'][:2]
-    # ]
-    #
-
-    suggests: typing.List[dict] = []
-    suggests.append({
-        "title": "Подробнее",
-        "url": "http://www.citywalls.ru/search-street283.html",
-        "hide": True
-    })
-
-    return suggests
 
 
 if __name__ == '__main__':
