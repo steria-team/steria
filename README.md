@@ -12,8 +12,7 @@ cd steria-dev
 
 1. Клонировать репозиторий   
 ```bash
-git clone
- 
+git clone https://github.com/pen-dev/steria.git
 ```
 
 2. Создать виртуальное окружение
@@ -56,9 +55,7 @@ pip install -r requirements.txt
 
 ```bash
 cd steria/src
-export FLASK_APP=api.py
-export FLASK_ENV=development
-export FLASK_DEBUG=0
+export FLASK_APP=api.py && export FLASK_ENV=development && export FLASK_DEBUG=0
 python -m flask run
 ```
 
