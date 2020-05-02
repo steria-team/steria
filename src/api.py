@@ -32,6 +32,10 @@ def after_request(response):
     return response
 
 
+@app.route('/test')
+def test():
+    return "test"
+
 @app.route("/", methods=['POST'])
 def main():
 # Функция получает тело запроса и возвращает ответ.
