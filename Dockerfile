@@ -6,7 +6,7 @@ WORKDIR /home/app
 
 COPY requirements.txt requirements.txt
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt && pip install gunicorn
 
 #install gunicorn
 
@@ -21,5 +21,6 @@ RUN chown -R steria:steria ./
 
 USER steria
 
-EXPOSE 5000
-ENTRYPOINT ["./run.sh"]
+#EXPOSE 5000
+ENTRYPOINT ["python"]
+CMD ["api.py"]
