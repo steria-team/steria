@@ -2,9 +2,9 @@ import os
 import pathlib
 import typing
 import enum
-
-import lxml
-import lxml.html
+#
+# import lxml
+# import lxml.html
 
 DIR_SCRIPT: pathlib.Path = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
 
@@ -83,12 +83,14 @@ class House:
         with open(example_page_path, 'r', encoding='windows-1251') as f:
             html_text: str = f.read()
 
-        tree: lxml.html.HtmlElement = lxml.html.fromstring(html=html_text)
-
-        if len(tree.xpath(header_xpath)) == 0:
-            raise NotFoundInfoHouse
-
-        return tree.xpath(header_xpath)[0].text
+        # tree: lxml.html.HtmlElement = lxml.html.fromstring(html=html_text)
+        #
+        #
+        # if len(tree.xpath(header_xpath)) == 0:
+        #     raise NotFoundInfoHouse
+        #
+        # return tree.xpath(header_xpath)[0].text
+        return 'test'
 
     def reset(self):
         self.street = None
