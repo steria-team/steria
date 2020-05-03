@@ -61,7 +61,7 @@ def main():
             {
                 "text": {
                     "text": [
-                        "testing 2.0"
+                        "testing 3.0"
                     ]
                 }
             }
