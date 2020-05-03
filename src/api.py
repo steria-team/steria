@@ -47,15 +47,33 @@ def main():
 
     request_json = request.get_json(force=True)
 
-    response = {
-        "version": request_json['version'],
-        "session": request_json['session'],
-        "response": {
-            "end_session": False
-        }
+    # response = {
+    #     "version": request_json['version'],
+    #     "session": request_json['session'],
+    #     "response": {
+    #         "end_session": False
+    #     }
+    # }
+
+
+    response: dict = {
+        "fulfillmentMessages": [
+            {
+                "text": {
+                    "text": [
+                        "testing 2.0"
+                    ]
+                }
+            }
+        ]
     }
 
-    handle_dialog(request_json, response)
+    try:
+        if request_json.get('queryResult').get('intent').get('displayName') == 'Version':
+            response["fulfillmentMessages"]["text"]["text"] = "0.0.3"
+    except Exception as e:
+        print(e.args)
+    # handle_dialog(request_json, response)
 
     logging.info('Response: %r', response)
 
