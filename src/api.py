@@ -36,9 +36,26 @@ sessionStorage: typing.Dict[str,  house.House] = {}
 #     return response
 
 
+
+
+
 @app.route('/test')
 def test():
     return "test"
+
+
+def get_error_event(error_type: str, error_text: str) -> dict:
+    return {
+        "followupEventInput": {
+            "name": "event_error",
+            "parameters": {
+                "error_type": error_type,
+                "error_text": error_text
+            },
+            "languageCode": "en-US"
+        }
+    }
+
 
 @app.route("/", methods=['POST'])
 def main():
@@ -46,15 +63,6 @@ def main():
 
 
     request_json = request.get_json(force=True)
-
-    # response = {
-    #     "version": request_json['version'],
-    #     "session": request_json['session'],
-    #     "response": {
-    #         "end_session": False
-    #     }
-    # }
-
 
     response: dict = {
         "fulfillmentMessages": [
@@ -72,7 +80,8 @@ def main():
         if request_json.get('queryResult').get('intent').get('displayName') == 'Version':
             response["fulfillmentMessages"]["text"]["text"] = "0.0.3"
     except Exception as e:
-        print(e.args)
+        response: dict = get_error_event(repr(e),
+                                         ' '.join(e.args))
     # handle_dialog(request_json, response)
 
     logging.info('Response: %r', response)
