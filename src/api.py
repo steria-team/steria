@@ -99,7 +99,7 @@ def main():
             }
         ]
     }
-
+    print(request_json)
     try:
         if request_json.get('queryResult').get('intent').get('displayName') == 'Version':
             response["fulfillmentMessages"]["text"]["text"] = "0.0.3"
