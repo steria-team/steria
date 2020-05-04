@@ -68,16 +68,16 @@ def get_error_context(session: str, error_type: str, error_text: str) -> dict:
                 }
             }
         ],
-        "outputContexts": [
-            {
-                "name": f"{session}/context/ErrorData",
-                "lifespanCount": 5,
-                "parameters": {
-                    "error_type": error_type,
-                    "error_text": error_text
-                }
-            }
-        ]
+        # "outputContexts": [
+        #     {
+        #         "name": f"{session}/context/ErrorData",
+        #         "lifespanCount": 5,
+        #         "parameters": {
+        #             "error_type": error_type,
+        #             "error_text": error_text
+        #         }
+        #     }
+        # ]
 }
 
 
