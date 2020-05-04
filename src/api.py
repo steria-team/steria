@@ -59,15 +59,14 @@ def get_error_event(error_type: str, error_text: str) -> dict:
 
 def get_error_context(session: str, error_type: str, error_text: str) -> dict:
     return {
-        "fulfillmentMessages": [
-            {
-                "text": {
-                    "text": [
-                        f"Text response from webhook, {session}"
-                    ]
-                }
-            }
-        ],
+        "followupEventInput": {
+            "name": "event_error",
+            "parameters": {
+                "error_type": error_type,
+                "error_text": error_text
+            },
+            "languageCode": "en-US"
+        },
         "outputContexts": [
             {
                 "name": f"{session}/contexts/ErrorData",
