@@ -63,21 +63,21 @@ def get_error_context(session: str, error_type: str, error_text: str) -> dict:
             {
                 "text": {
                     "text": [
-                        "Text response from webhook"
+                        f"Text response from webhook, {session}"
                     ]
                 }
             }
         ],
-        # "outputContexts": [
-        #     {
-        #         "name": f"{session}/context/ErrorData",
-        #         "lifespanCount": 5,
-        #         "parameters": {
-        #             "error_type": error_type,
-        #             "error_text": error_text
-        #         }
-        #     }
-        # ]
+        "outputContexts": [
+            {
+                "name": f"{session}/contexts/ErrorData",
+                "lifespanCount": 5,
+                "parameters": {
+                    "error_type": error_type,
+                    "error_text": error_text
+                }
+            }
+        ]
 }
 
 
