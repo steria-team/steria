@@ -57,6 +57,30 @@ def get_error_event(error_type: str, error_text: str) -> dict:
     }
 
 
+def get_error_context(session: str, error_type: str, error_text: str) -> dict:
+    return {
+        "fulfillmentMessages": [
+            {
+                "text": {
+                    "text": [
+                        "Text response from webhook"
+                    ]
+                }
+            }
+        ],
+        "outputContexts": [
+            {
+                "name": f"{session}/context/ErrorData",
+                "lifespanCount": 5,
+                "parameters": {
+                    "error_type": error_type,
+                    "error_text": error_text
+                }
+            }
+        ]
+}
+
+
 @app.route("/", methods=['POST'])
 def main():
 # Функция получает тело запроса и возвращает ответ.
@@ -80,8 +104,12 @@ def main():
         if request_json.get('queryResult').get('intent').get('displayName') == 'Version':
             response["fulfillmentMessages"]["text"]["text"] = "0.0.3"
     except Exception as e:
-        response: dict = get_error_event(repr(e),
-                                         ' '.join(e.args))
+        # response: dict = get_error_event(repr(e),
+        #                                  ' '.join(e.args))
+
+        response: dict = get_error_context(request_json['session'],
+                                           repr(e),
+                                           ' '.join(e.args))
     # handle_dialog(request_json, response)
 
     logging.info('Response: %r', response)
