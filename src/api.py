@@ -100,8 +100,12 @@ def main():
     }
     print(request_json)
     try:
-        if request_json.get('queryResult').get('intent').get('displayName') == 'Version':
+        intent: str = request_json.get('queryResult').get('intent').get('displayName')
+        if intent == 'Version':
             response["fulfillmentMessages"]["text"]["text"] = "0.0.3"
+        elif intent == 'ErrorHelp':
+            response: dict = get_error_event(error_type='TestError',
+                                             error_text='')
     except Exception as e:
         # response: dict = get_error_event(repr(e),
         #                                  ' '.join(e.args))
