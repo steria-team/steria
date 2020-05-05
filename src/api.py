@@ -44,8 +44,9 @@ def test():
     return "test"
 
 
-def get_error_event(error_type: str, error_text: str) -> dict:
+def get_error_event(fulfillmentMessages, error_type: str, error_text: str) -> dict:
     return {
+        "fulfillmentMessages": fulfillmentMessages,
         "followupEventInput": {
             "name": "event_error",
             "parameters": {
@@ -104,7 +105,8 @@ def main():
         if intent == 'Version':
             response["fulfillmentMessages"]["text"]["text"] = "0.0.3"
         elif intent == 'ErrorHelp':
-            response: dict = get_error_event(error_type='TestError',
+            response: dict = get_error_event(fulfillmentMessages=request_json.get('queryResult').get('fulfillmentMessages'),
+                                             error_type='TestError',
                                              error_text='')
     except Exception as e:
         # response: dict = get_error_event(repr(e),
