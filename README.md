@@ -6,3 +6,5 @@
  зданиях Санкт-Петербурга.
  
 [Документация](doc/README.md)
+
+[Changelog]](doc/news.mc)
