@@ -10,7 +10,7 @@ RUN pip install -r requirements.txt && pip install gunicorn
 
 #install gunicorn
 
-COPY src .
+COPY steria-server .
 
 COPY run.sh .
 RUN chmod +x run.sh
