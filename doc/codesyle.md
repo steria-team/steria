@@ -4,7 +4,9 @@
 
 Используем этот документ [google python style](https://google.github.io/styleguide/pyguide.html)
 
-Используем типы в python [Type Annotated Code](https://google.github.io/styleguide/pyguide.html#221-type-annotated-code)
+Используем типы в python 
+ - [Type Annotated Code](https://google.github.io/styleguide/pyguide.html#221-type-annotated-code)
+ - [Type Annotations](https://google.github.io/styleguide/pyguide.html#319-type-annotations)
 
 Используем статический анализатор кода [flake8](https://habr.com/ru/company/dataart/blog/318776/)
 
