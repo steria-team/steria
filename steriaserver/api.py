@@ -8,13 +8,7 @@ import pathlib
 from steriaserver import app
 from flask import request
 
-
 from steriaserver import dialogflowapi
-
-DIR_SCRIPT: pathlib.Path = pathlib.Path(os.path.dirname(os.path.realpath(__file__)))
-
-# Хранилище данных о сессиях.
-
 
 @app.route('/test')
 def test():
