@@ -10,10 +10,9 @@ RUN pip install -r requirements.txt && pip install gunicorn
 
 #install gunicorn
 
-COPY steria-server .
+COPY steriaserver steriaserver
 
-COPY run.sh .
-RUN chmod +x run.sh
+COPY steria.py .
 
 ENV FLASK_APP api.py
 
@@ -23,4 +22,4 @@ USER steria
 
 #EXPOSE 5000
 ENTRYPOINT ["python"]
-CMD ["api.py"]
+CMD ["steria.py"]
