@@ -2,9 +2,6 @@ import json
 import logging
 import typing
 
-import os
-import pathlib
-
 from steriaserver import app
 from flask import request
 
