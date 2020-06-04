@@ -12,9 +12,8 @@ stages:
 test:
   stage: test
   script:
-    - apt-get install -y python-dev python-pip
-    - pip install -r requirements.txt
-    - pytest
+    - docker build -f Dockerfile-tests -t steria:test .
+    - docker run --rm -it steria:test
 
 docker-build:
   stage: build
