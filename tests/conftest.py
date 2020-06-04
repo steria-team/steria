@@ -1,5 +1,6 @@
 import pytest
-from steriaserver import app
+# from steriaserver import app
+# from steria.steriaserver import app
 
 
 @pytest.fixture
