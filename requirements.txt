@@ -1,2 +1,3 @@
 Flask==0.12.2
 flask_cors
+flake8==3.8.2
