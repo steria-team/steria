@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="steria.py" type="Python.FlaskServer">
     <option name="flaskDebug" value="true" />
-    <module name="steria_gitlab" />
+    <module name="steria" />
     <option name="target" value="$PROJECT_DIR$/steria.py" />
     <option name="targetType" value="PATH" />
     <option name="INTERPRETER_OPTIONS" value="" />

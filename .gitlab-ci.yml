@@ -1,15 +1,27 @@
-image: docker:latest
-services:
-  - docker:dind
-
 variables:
   DOCKER_DRIVER: overlay
 
 stages:
-  - build
   - test
-  
+  - build
+
+test:
+  image: python:3.7.7-alpine
+  stage: test
+  before_script:
+    - pip install -r requirements.txt
+  script:
+    - pytest --junit-xml=test-report.xml
+  artifacts:
+    paths:
+      - test-report.xml
+    reports:
+      junit: test-report.xml
+
 docker-build:
+  image: docker:latest
+  services:
+    - docker:dind
   stage: build
   script:
   - docker build -f Dockerfile --iidfile imageid.txt -t registry.heroku.com/steria/web .
