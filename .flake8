@@ -1,0 +1,5 @@
+[flake8]
+docstring-convention = google
+import-order-style = google
+exclude = .git,__pycache__,docs/source/conf.py,old,build,dist
+inline-quotes = '
