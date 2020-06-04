@@ -11,7 +11,12 @@ test:
   before_script:
     - pip install -r requirements.txt
   script:
-    - pytest
+    - pytest --junit-xml=test-report.xml
+  artifacts:
+    paths:
+      - test-report.xml
+    reports:
+      junit: test-report.xml
 
 docker-build:
   image: docker:latest
