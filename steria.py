@@ -6,7 +6,7 @@ from steriaserver.HouseManager import Quote
 
 # добавил resource к API и задал путь
 api = Api(app)
-api.add_resource(Quote, "/ai-quotes", "/ai-quotes/", "/ai-quotes/<int:r_adress>")
+api.add_resource(Quote, "/address", "/address/", "/address/<string:r_adress>")
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
