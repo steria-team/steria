@@ -22,11 +22,11 @@ def test_smoke_test(client):
 
 
 house_full_address: HouseData = HouseData(
-    r_adress='Обводный кан.  10',
-    r_name='Масляный мост',
-    r_years_string='1984',
-    r_architect='Современный',
-    r_style='Современный'
+    r_adress='проспект Медиков10 к2',
+    r_name='',
+    r_years_string='2015',
+    r_architect=None,
+    r_style=None
 )
 
 house_address_contains: HouseData = HouseData(
@@ -34,14 +34,14 @@ house_address_contains: HouseData = HouseData(
              'Каменноостровский проспект, дом 59, литера А',
     r_name='Доходный дом И. Д. Агафонова',
     r_years_string='1908-1909',
-    r_architect='Модерн',
+    r_architect='Мульханов П. М.',
     r_style='Модерн'
 )
 
 
 @pytest.mark.parametrize(
     'address, expected_data',
-    [('Обводный кан. 10', house_full_address),
+    [('проспект Медиков10 к2', house_full_address),
      ('Каменноостровский проспект, дом 59', house_address_contains)])
 def test_get_address_data(client: testing.FlaskClient,
                           address: str,
