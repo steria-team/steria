@@ -37,14 +37,13 @@ class Quote:
     @staticmethod
     def call_api(r_adress: str) -> Dict[str, str]:
         # print(r_adress)
-        query = {'q': f"select * from public.saintpv5_dates where r_adress='{r_adress.replace(' ', '%')}' or r_adress like '%{r_adress}%'"}
+        query = {'q': f"select * from public.saintpv5_dates where r_adress='{r_adress}' or r_adress like '%{r_adress.replace(' ', '%')}%'"}
         # print(query)
         # params = parse.urlencode(query)
         # params = query
         # apiUrl = 'https://nslavin.carto.com/api/v2/sql?' + params
         # todo: почему camelCase? в python api_url
         apiUrl = f'https://nslavin.carto.com/api/v2/sql?q={query["q"]}'
-
         print(apiUrl)
         reqAddress = requests.get(apiUrl)
         print("Status code:", reqAddress.status_code)
