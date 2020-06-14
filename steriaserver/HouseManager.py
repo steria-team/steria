@@ -37,7 +37,7 @@ class Quote:
     @staticmethod
     def call_api(r_adress: str) -> Dict[str, str]:
         # print(r_adress)
-        query = {'q': f"select * from public.saintpv5_130620 where r_adress='{r_adress}' or r_adress like '%{r_adress}%'"}
+        query = {'q': f"select * from public.saintpv5_dates where r_adress='{r_adress}' or r_adress like '%{r_adress}%'"}
         # print(query)
         # params = parse.urlencode(query)
         # params = query
