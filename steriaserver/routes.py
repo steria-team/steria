@@ -12,7 +12,7 @@ def test():
     return 'test'
 
 
-@app.route('/address', methods=['GET'])
+@app.route('/address', methods=['GET', 'POST'])
 def address():
     request_json = request.get_json(force=True)
 
