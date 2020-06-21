@@ -1,5 +1,6 @@
 from typing import Dict
 
+from flask_restful import Resource
 import requests
 
 
@@ -29,24 +30,16 @@ class HouseData:
 
 
 class Quote:
-    # def get(self, r_adress):
-    #     if r_adress == '':
-    #         return "Quote not found", 404
-    #     return self.callApi(r_adress)
 
     @staticmethod
     def call_api(r_adress: str) -> Dict[str, str]:
-        # print(r_adress)
-        query = {'q': f"select * from public.saintpv5_dates where r_adress='{r_adress}' or r_adress like '%{r_adress.replace(' ', '%')}%'"}
-        # print(query)
-        # params = parse.urlencode(query)
-        # params = query
-        # apiUrl = 'https://nslavin.carto.com/api/v2/sql?' + params
-        # todo: почему camelCase? в python api_url
+        query = {
+            'q': f"select * from public.saintpv5_dates where r_adress='{r_adress}' or r_adress like '%{r_adress.replace(' ', '%')}%'"}
+
         apiUrl = f'https://nslavin.carto.com/api/v2/sql?q={query["q"]}'
         print(apiUrl)
         reqAddress = requests.get(apiUrl)
-        print("Status code:", reqAddress.status_code)
+        print('Status code:', reqAddress.status_code)
         print(reqAddress.text)
 
         # todo: проверка ошибок в запросе
@@ -56,5 +49,14 @@ class Quote:
         else:
             raise Exception
 
-        # return reqAddress.json()
 
+class HouseResource(Resource):
+
+    def get(self, address: str):
+        if address == 'ул кирилл2':
+            return {'test': 'ok'}, 200
+
+        house_data = HouseData.from_dict(
+            data=Quote.call_api(address)
+        )
+        return {**house_data.get_json()}

@@ -2,35 +2,17 @@ import json
 import logging
 
 from flask import request
+from steriaserver import api
 from steriaserver import app
 from steriaserver import dialogflowapi
 from steriaserver import HouseManager
+
+api.add_resource(HouseManager.HouseResource, '/v1/house/<address>')
 
 
 @app.route('/test')
 def test():
     return 'test'
-
-
-@app.route('/address', methods=['GET', 'POST'])
-def address():
-    request_json = request.get_json(force=True)
-
-    house_data = HouseManager.HouseData.from_dict(
-        data=HouseManager.Quote.call_api(request_json['house_data']['address'])
-    )
-    # todo: нужно проверять версию api + тест
-    # todo: если здание не удалось найти нужно возвращать 404
-    response = {
-        'version': '0.1.0',
-        'house_data': {**house_data.get_json()}
-    }
-    return json.dumps(
-        response,
-        ensure_ascii=False,
-        indent=2
-    )
-
 
 
 @app.route('/', methods=['POST'])
