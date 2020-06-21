@@ -1,6 +1,9 @@
 from typing import Dict
+from typing import Union
 
 from flask_restful import abort
+from flask_restful import fields
+from flask_restful import marshal_with
 from flask_restful import reqparse
 from flask_restful import Resource
 from steriaserver.houselib import HouseData
@@ -15,9 +18,19 @@ parser.add_argument(
 )
 
 
+resource_fields: Dict[str, fields.String] = {
+    'r_adress': fields.String,
+    'r_name': fields.String,
+    'r_architect': fields.String,
+    # 'r_cw_url': fields.String,
+    'r_style': fields.String,
+    'r_years_string': fields.String
+}
+
 # @api.resource('/v1/house')
 class HouseResource(Resource):
 
+    @marshal_with(resource_fields)
     def get(self):
         args: Dict[str, str] = parser.parse_args()
         address: str = args['address']
@@ -31,6 +44,5 @@ class HouseResource(Resource):
                     Error=msg
                 )
             )
-        return {
-            **data.get_dict()
-        }
+        return data
+
