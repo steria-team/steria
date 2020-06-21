@@ -7,7 +7,10 @@ from steriaserver import app
 from steriaserver import dialogflowapi
 import steriaserver.api
 
-api.add_resource(steriaserver.api.HouseResource, '/v1/house/<address>')
+api.add_resource(
+    steriaserver.api.HouseResource,
+    '/v1/house'
+)
 
 
 @app.route('/test')
