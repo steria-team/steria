@@ -3,7 +3,6 @@ from typing import Dict
 import requests
 
 
-
 class Carto:
 
     @staticmethod
