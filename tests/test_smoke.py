@@ -54,3 +54,28 @@ def test_get_address_data(client: testing.FlaskClient,
 
     for name in params:
         assert params[name] == expected_data.__dict__[name], f'name={name}'
+
+
+def test_required_params_error(client: testing.FlaskClient):
+    response_data: Dict[str, str] = flask.json.loads(
+        client.get('/v1/house').get_data()
+    )
+
+    assert len(response_data.keys()) == 1
+    assert response_data['message'] == {
+        'address': 'Missing required parameter in the JSON body or '
+                   'the post body or the query string'
+    }
+
+
+def test_bad_value_address_param(client: testing.FlaskClient):
+    address: str = 'bad'
+    response_data: Dict[str, str] = flask.json.loads(
+        client.get(f'/v1/house?address={address}').get_data()
+    )
+
+    assert len(response_data.keys()) == 1
+    assert response_data['message'] == {
+        'Error': f'Could not get information at this address: {address}'
+    }
+
