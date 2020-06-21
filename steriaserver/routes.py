@@ -5,9 +5,9 @@ from flask import request
 from steriaserver import api
 from steriaserver import app
 from steriaserver import dialogflowapi
-from steriaserver import HouseManager
+import steriaserver.api
 
-api.add_resource(HouseManager.HouseResource, '/v1/house/<address>')
+api.add_resource(steriaserver.api.HouseResource, '/v1/house/<address>')
 
 
 @app.route('/test')
