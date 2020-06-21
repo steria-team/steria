@@ -42,16 +42,15 @@ house_address_contains: HouseData = HouseData(
 @pytest.mark.parametrize(
     'address, expected_data',
     [('проспект Медиков10 к2', house_full_address),
-     ('Каменноостровский проспект, дом 59', house_address_contains)])
+     ('Каменноостровский проспект, дом 59', house_address_contains)]
+)
 def test_get_address_data(client: testing.FlaskClient,
                           address: str,
                           expected_data: HouseData):
-    res: wrappers.Response = client.get('/address',
-                                        json={'version': '0.1.0',
-                                              'house_data': {
-                                                  'address': address}
-                                              })
-    params: Dict = flask.json.loads(res.get_data())['house_data']
+
+    res: wrappers.Response = client.get(f'/v1/house/{address}')
+
+    params: Dict = flask.json.loads(res.get_data())
 
     for name in params:
         assert params[name] == expected_data.__dict__[name], f'name={name}'
