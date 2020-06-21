@@ -48,7 +48,7 @@ def test_get_address_data(client: testing.FlaskClient,
                           address: str,
                           expected_data: HouseData):
 
-    res: wrappers.Response = client.get(f'/v1/house/{address}')
+    res: wrappers.Response = client.get(f'/v1/house?address={address}')
 
     params: Dict = flask.json.loads(res.get_data())
 
