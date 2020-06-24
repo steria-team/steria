@@ -13,14 +13,6 @@ api.add_resource(
 )
 
 
-# app.after_request
-# def after_request(response):
-#     header = response.headers
-#     header['Access-Control-Allow-Origin'] = 'https://alice-dev.vitalets.xyz'
-#     print('header adding')
-#     return response
-
-
 @app.route('/test')
 def test():
     return 'test'
