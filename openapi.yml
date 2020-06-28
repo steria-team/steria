@@ -98,12 +98,7 @@ paths:
       summary: "Получить информацию о здании по его id"
       description: "Возвращает набор параметров о здании или ошибку"
       parameters:
-       - name: house_id
-         in: path
-         required: true
-         example: 22
-         schema:
-            type: integer
+       - $ref: '#/components/parameters/house_id'
       responses:
         200:
           description: Successful response
@@ -156,6 +151,13 @@ paths:
 
 components:
   parameters:
+    house_id:
+      name: house_id
+      in: path
+      required: true
+      example: 22
+      schema:
+        type: integer
     address:
       name: address
       in: query
@@ -169,14 +171,15 @@ components:
       title: House
       type: object
       properties:
+        address:
+          $ref: '#/components/parameters/address'
         house_id:
-          type: integer
+          $ref: '#/components/parameters/house_id'
         title:
           type: string
         id:
           type: integer
-        address:
-          type: string
+
 
 
 
