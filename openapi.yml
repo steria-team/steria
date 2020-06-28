@@ -1,0 +1,61 @@
+openapi: 3.0.2
+info:
+  title: Steria server API
+  description: ''
+  version: 0.0.1
+servers:
+- url: https://steria.herokuapp.com/v1
+- url: https://steria.herokuapp.com/v1.1
+tags:
+- name: House info
+  description: ''
+
+paths:
+  /house:
+    get:
+      tags:
+        - House info
+      summary: "123"
+      description: "12300"
+      parameters:
+        - name: address
+          in: query
+          description: "Манежный пер 15-17"
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                title: Sample
+                type: object
+                properties:
+                  r_adress:
+                    type: string
+                  r_name:
+                    type: string
+                  r_architect:
+                    type: string
+                  r_style:
+                    type: string
+                  r_years_string:
+                    type: string
+
+
+        500:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                title: Sample
+                type: object
+                properties:
+                  message:
+                    type: object
+                    properties:
+                      Error:
+                        type: string
+                        title: "Сообщение об ошибке"
