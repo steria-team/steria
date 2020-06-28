@@ -4,23 +4,23 @@ info:
   description: ''
   version: 0.0.1
 servers:
-- url: https://steria.herokuapp.com/v1
-- url: https://steria.herokuapp.com/v1.1
+- url: https://steria.herokuapp.com
 tags:
 - name: House info
   description: ''
 
 paths:
-  /house:
+  /v1/house:
     get:
       tags:
         - House info
-      summary: "123"
-      description: "12300"
+      summary: "Получить информацию о здании по точному адресу"
+      description: "Возвращает набор параметров о здании или ошибку. Если адрес не уникальный и было найдено более одного адреса - будет возвращена ошибка."
       parameters:
         - name: address
           in: query
           description: "Манежный пер 15-17"
+          required: true
           schema:
             type: string
 
