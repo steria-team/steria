@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Steria server API
   description: ''
-  version: 0.0.1
+  version: 0.0.2
 servers:
 - url: https://steria.herokuapp.com
 tags:
@@ -65,12 +65,14 @@ paths:
 
 
 
-  /v1.1/houses:
+  /v1.1/houses/getByAddress:
     get:
       tags:
         - House info v1.1
       summary: "Получить информацию о здании по точному адресу"
-      description: "Возвращает набор параметров о здании или ошибку. Если адрес не уникальный и было найдено более одного адреса - будет возвращена ошибка."
+      description: "Получить массив с краткой информацией о зданиях, адрес которых примерно совпадает с переданным в параметре. Необходимо указать количество найденных совпадений. Если совпадения не найдены то возвращается пустой массив с `count=0`."
+      parameters:
+      - $ref: '#/components/parameters/address'
       responses:
         200:
           description: Successful response
@@ -81,18 +83,11 @@ paths:
                 type: object
                 properties:
                   houses:
-                    type: object
-                    properties:
-                      house_id:
-                        type: object
-                        properties:
-                          title:
-                            type: string
-                          id:
-                            type: integer
-                          address:
-                            type: string
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HouseItem'
                   count:
+                    title: "Количество записей в разделе"
                     type: integer
 
 
@@ -106,6 +101,7 @@ paths:
        - name: house_id
          in: path
          required: true
+         example: 22
          schema:
             type: integer
       responses:
@@ -114,16 +110,73 @@ paths:
           content:
             application/json:
               schema:
-                title: Sample
+                title: HouseData
                 type: object
                 properties:
-                  r_adress:
+                  full_address:
+                    description: "Полный адрес здания!! Указать название столбцов в базе"
+                    example: test
                     type: string
-                  r_name:
+                  title:
+                    description: "Название здания"
+                    example: test
                     type: string
-                  r_architect:
+                  architect:
+                    description: "Имя или имена орхитекторов"
+                    example: test
                     type: string
-                  r_style:
+                  style:
+                    description: "Название архитектурного стиля здания"
+                    example: test
                     type: string
-                  r_years_string:
+                  buildYears:
+                    description: "Год строительства задния"
+                    example: test
                     type: string
+                  URL:
+                    description: "Ссылка на оффициальный сайт"
+                    example: test
+                    type: string
+        404:
+          description: Not found response
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  message:
+                    description: "Сообщение клиенту"
+                    type: object
+                    properties:
+                      error:
+                        description: "Ошибка"
+                        type: string
+
+
+components:
+  parameters:
+    address:
+      name: address
+      in: query
+      required: true
+      example: "Манежный пер 15-17!!!"
+      description: "**Фрагмент адреса**. Пример: `Манежный пер 15-17`"
+      schema:
+        type: string
+  schemas:
+    HouseItem:
+      title: House
+      type: object
+      properties:
+        house_id:
+          type: integer
+        title:
+          type: string
+        id:
+          type: integer
+        address:
+          type: string
+
+
+
