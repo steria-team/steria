@@ -147,6 +147,8 @@ paths:
                       error:
                         description: "Ошибка"
                         type: string
+  /v1.1/sendBugReport
+    post:
 
 
 components:
