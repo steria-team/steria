@@ -6,16 +6,16 @@ info:
 servers:
 - url: https://steria.herokuapp.com
 tags:
-- name: House info v1.0
+- name: API v1.0
   description: ''
-- name: House info v1.1
+- name: API v1.1
   description: ''
 
 paths:
   /v1/house:
     get:
       tags:
-        - House info v1.0
+        - API v1.0
       summary: "Получить информацию о здании по точному адресу"
       description: "Возвращает набор параметров о здании или ошибку. Если адрес не уникальный и было найдено более одного адреса - будет возвращена ошибка."
       parameters:
@@ -68,7 +68,7 @@ paths:
   /v1.1/houses/getByAddress:
     get:
       tags:
-        - House info v1.1
+        - API v1.1
       summary: "Получить информацию о здании по точному адресу"
       description: "Получить массив с краткой информацией о зданиях, адрес которых примерно совпадает с переданным в параметре. Необходимо указать количество найденных совпадений. Если совпадения не найдены то возвращается пустой массив с `count=0`."
       parameters:
@@ -94,7 +94,7 @@ paths:
   /v1.1/houses/{house_id}:
     get:
       tags:
-        - House info v1.1
+        - API v1.1
       summary: "Получить информацию о здании по его id"
       description: "Возвращает набор параметров о здании или ошибку"
       parameters:
@@ -147,8 +147,24 @@ paths:
                       error:
                         description: "Ошибка"
                         type: string
-  /v1.1/sendBugReport
+  /v1.1/sendBugReport:
     post:
+      tags:
+        - API v1.1
+      summary: "Сообщить об ошибке в программе"
+      description: ""
+      parameters:
+        - name: ReportType
+          in: query
+          required: true
+          schema:
+           $ref: '#/definitions/BugReport'
+      responses:
+        200:
+          description: "Successful operation"
+        405:
+          description: "Invalid input"
+
 
 
 components:
@@ -181,6 +197,20 @@ components:
           type: string
         id:
           type: integer
+
+
+definitions:
+  BugReport:
+    type: "object"
+    properties:
+      ReportType:
+        type: "string"
+      ClientVersion:
+        type: "string"
+      ReportDescription:
+        type: "string"
+
+
 
 
 
