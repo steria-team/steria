@@ -13,6 +13,11 @@ api.add_resource(
 )
 
 
+@app.route('/debug-sentry')
+def trigger_error():
+    division_by_zero = 1/0
+    
+
 @app.route('/test')
 def test():
     return 'test'
