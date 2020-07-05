@@ -80,9 +80,9 @@ def test_bad_value_address_param(client: testing.FlaskClient):
     }
 
 @pytest.mark.parametrize('address', [
-'манежный пер 15-17', 'Манежный пеР 15-17'
+                                        'манежный пер 15-17', 
+                                        'Манежный пеР 15-17'
                          ])
-
 def test_register_in_request(client: testing.FlaskClient, address: str):
     result = client.get(f'/v1/house?address={address}')
     responce_data: Dict[str, str] = flask.json.loads(
