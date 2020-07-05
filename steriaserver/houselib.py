@@ -8,7 +8,7 @@ class Carto:
     @staticmethod
     def call_api(r_adress: str) -> Dict[str, str]:
         query = {
-            'q': f"select * from public.saintpv5_dates where r_adress='{r_adress}' or r_adress like '%{r_adress.replace(' ', '%')}%'"}
+            'q': f"select * from public.saintpv5_dates where UPPER(r_adress)=UPPER('{r_adress}') or UPPER(r_adress) like UPPER('%{r_adress.replace(' ', '%')}%')"}
 
         apiUrl = f'https://nslavin.carto.com/api/v2/sql?q={query["q"]}'
         print(apiUrl)
