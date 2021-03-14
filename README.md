@@ -10,3 +10,6 @@
 - [Разработка](doc/devinfo.md)
 
 [Changelog]](doc/news.mc)
+
+
+test
