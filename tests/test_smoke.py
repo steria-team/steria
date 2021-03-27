@@ -3,6 +3,7 @@ from typing import Dict
 
 
 
+
 @dataclass(init=True)
 class HouseData:
     r_name: str
