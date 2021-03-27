@@ -1,12 +1,20 @@
 variables:
   DOCKER_DRIVER: overlay
+  PYTHON_IMAGE: python:3.9.2-alpine3.12
 
 stages:
+  - lint
   - test
   - deploy
 
+
+lint:
+  image: $PYTHON_IMAGE
+  stage: lint
+  script: ./scripts/check.sh
+
 test:
-  image: python:3.7.7-alpine
+  image: $PYTHON_IMAGE
   stage: test
   before_script:
     - pip install -r requirements.txt
