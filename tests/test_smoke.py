@@ -1,10 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict
 
-import flask
-from flask import testing
-from flask import wrappers
-import pytest
 
 
 @dataclass(init=True)
