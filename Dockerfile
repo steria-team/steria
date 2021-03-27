@@ -10,7 +10,7 @@ RUN pip install -r requirements.txt && pip install gunicorn
 
 #install gunicorn
 
-COPY steriaserver steriaserver
+COPY steria steriaserver
 
 COPY steria.py .
 
